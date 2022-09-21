@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './Questao.dart';
+import './Respostas.dart';
 
 main() => runApp(PerguntaApp());  // INSTANCIEI O PERGUNTA APP
 
@@ -14,7 +15,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
      setState(() {
         _PerguntaSelecionada++;   // DENTRO DO SET STATE VOCE PASSA AQUILO QUE ESTÁ SENDO MODIFICADO
      });
-      print(_PerguntaSelecionada);
+     
 
        }
 
@@ -36,18 +37,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
          body:  Column(
            children:  <Widget>  [
              Questao(perguntas[_PerguntaSelecionada]),
-              ElevatedButton(
-              child:  Text("Resposta 1") ,  // UM BOTAO QUE RECEBE UM FILHO = CHILD
-              onPressed: _responder,  // NÃO ESTA PASSANDO NENHUMA FUNÇÃO PARA SER EXECUTADA NO BOTAO  
-             ),
-              ElevatedButton(
-              child: Text("Resposta 2") ,  
-              onPressed: _responder,  
-             ),
-               ElevatedButton(
-              child: Text("Resposta 3") ,  
-              onPressed: _responder,  
-             )
+             Resposta("Resposta 1", _responder),  //  A FUNCAO _RESPONDER FOI PASSADA COMO PARAMENTRO PARA RESPOSTA
+             Resposta("Resposta 2", _responder),
+             Resposta("Resposta 3", _responder) ,
+             
+               
            ],
          ),
          ),
