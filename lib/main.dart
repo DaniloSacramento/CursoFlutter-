@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import './Questao.dart';
 
 main() => runApp(PerguntaApp());  // INSTANCIEI O PERGUNTA APP
 
+class _PerguntaAppState extends State<PerguntaApp> {
 
-class PerguntaApp extends StatelessWidget{ 
-  void responder() { 
-    
-      print("Pergunta respondida");
-    
-  }
+   var _PerguntaSelecionada = 0;
+
+   
+
   
- 
+  void _responder() {     
+     setState(() {
+        _PerguntaSelecionada++;   // DENTRO DO SET STATE VOCE PASSA AQUILO QUE ESTÁ SENDO MODIFICADO
+     });
+      print(_PerguntaSelecionada);
+
+       }
 
   @override
    
   Widget build (BuildContext context){  // CRIAMOS UM METODO 
     
-    final List <String> perguntas = [ "Qual é sua cor favorita?",  "Qual é seu time?", "Qual seu animal favorito?",
+    final perguntas = [ 
+    "Qual é sua cor favorita?", 
+    "Qual é seu time?", 
+    "Qual seu animal favorito?",
   ]; 
 
     return  MaterialApp(
@@ -26,23 +35,36 @@ class PerguntaApp extends StatelessWidget{
         ),
          body:  Column(
            children:  <Widget>  [
-             Text(perguntas.elementAt(1)),
+             Questao(perguntas[_PerguntaSelecionada]),
               ElevatedButton(
               child:  Text("Resposta 1") ,  // UM BOTAO QUE RECEBE UM FILHO = CHILD
-              onPressed: responder,  // NÃO ESTA PASSANDO NENHUMA FUNÇÃO PARA SER EXECUTADA NO BOTAO  
+              onPressed: _responder,  // NÃO ESTA PASSANDO NENHUMA FUNÇÃO PARA SER EXECUTADA NO BOTAO  
              ),
               ElevatedButton(
               child: Text("Resposta 2") ,  
-              onPressed: responder,  
+              onPressed: _responder,  
              ),
                ElevatedButton(
               child: Text("Resposta 3") ,  
-              onPressed: () => print("Resposta 3!"),  
+              onPressed: _responder,  
              )
            ],
          ),
          ),
       );
-    
+
   }
+}
+class PerguntaApp extends StatefulWidget{ 
+  
+ @override
+  _PerguntaAppState createState() {
+     return _PerguntaAppState();
+  }
+  
+  
+ 
+
+    
+ 
 }
