@@ -23,10 +23,19 @@ class _PerguntaAppState extends State<PerguntaApp> {
    
   Widget build (BuildContext context){  // CRIAMOS UM METODO 
     
-    final perguntas = [ 
-    "Qual é sua cor favorita?", 
-    "Qual é seu time?", 
-    "Qual seu animal favorito?",
+    final List<Map<String, Object>> perguntas = [ 
+      {
+        "texto" : "Qual é seu time?",
+        "respostas": ["Nautico" ,  "Sport" , "Santa Cruz", "Salgueiro"]
+      },
+      {
+        "texto" : "Qual seu jogador favorito?",
+        "respostas": ["Jean Carlos", "Kieza", "Diego Souza", "Denis Marques"], 
+      },
+      {
+        "texto": "Qual seu estadio de futebol favorito?",
+        "respostas": ["Aflitos", "Arruda", "Ilha do Retiro", "Arena Pernambuco"]
+      }
   ]; 
 
     return  MaterialApp(
@@ -36,7 +45,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
          body:  Column(
            children:  <Widget>  [
-             Questao(perguntas[_PerguntaSelecionada]),
+             Questao(perguntas[_PerguntaSelecionada]["texto"].toString()),
              Resposta("Resposta 1", _responder),  //  A FUNCAO _RESPONDER FOI PASSADA COMO PARAMENTRO PARA RESPOSTA
              Resposta("Resposta 2", _responder),
              Resposta("Resposta 3", _responder) ,
