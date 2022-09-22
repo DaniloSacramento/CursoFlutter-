@@ -1,66 +1,86 @@
 import 'package:flutter/material.dart';
-import './Questao.dart';
-import './Respostas.dart';
+import 'package:primeiro_projeto/Resultado.dart';
+import "./Questionario.dart";
 
 main() => runApp(PerguntaApp()); // INSTANCIEI O PERGUNTA APP
 
 class _PerguntaAppState extends State<PerguntaApp> {
-  var _PerguntaSelecionada = 0;
+  var _perguntaSelecionada = 0;
+  var _pontuacaoTotal = 0;
 
   final List<Map<String, Object>> _perguntas = const [
     {
       "texto": "Qual é seu time?",
-      "respostas": ["Nautico", "Sport", "Santa Cruz", "Salgueiro"]
+      "respostas": [
+        {"texto": "Nautico", "nota": 10},
+        {"texto": "Sport", "nota": 9},
+        {"texto": "Santa Cruz", "nota": 6},
+        {"texto": "Salgueiro", "nota": 8},
+      ],
     },
     {
       "texto": "Qual seu jogador favorito?",
-      "respostas": ["Jean Carlos", "Kieza", "Diego Souza", "Denis Marques"],
+      "respostas": [
+           {"texto": "Jean Carlos" , "nota":1 },
+           {"texto": "Kieza" , "nota": 2},
+           {"texto": "Diego Souza" , "nota": 7},
+           {"texto": "Denis Marques" , "nota": 5},
+      ],
     },
     {
       "texto": "Qual seu estadio de futebol favorito?",
-      "respostas": ["Aflitos", "Arruda", "Ilha do Retiro", "Arena Pernambuco"]
+      "respostas": [
+           
+       { "texto": "Aflitos" , "nota":9 },    
+       {"texto": "Arruda" , "nota":4},
+       {"texto": "Ilha do Retiro" , "nota":10 },    
+       {"texto": "Arena Pernambuco" , "nota":5 },
+      ]
     }
   ];
 
-  void _responder() {
+  void _responder(int pontuacaoUsuario) {
     // Metodo responder
     if (temPerguntaSelecionada) {
       setState(() {
-        _PerguntaSelecionada++; // DENTRO DO SETSTATE VOCE PASSA AQUILO QUE ESTÁ SENDO MODIFICADO
+        _perguntaSelecionada++; 
+        _pontuacaoTotal += pontuacaoUsuario;
+         // DENTRO DO SETSTATE VOCE PASSA AQUILO QUE ESTÁ SENDO MODIFICADO
       });
     }
+       
   }
+  
 
+  void _reiniciarApp(){
+        setState(() {    // AQUI IREMOS REINICIALZAR O APP
+          _perguntaSelecionada = 0;
+          _pontuacaoTotal = 0;
+
+        });
+
+  }
   bool get temPerguntaSelecionada {
-    return _PerguntaSelecionada < _perguntas.length;
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
     // CRIAMOS UM METODO
 
-    List<String> respostas = temPerguntaSelecionada
-        ? _perguntas[_PerguntaSelecionada].cast()["respostas"]
-        : [];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text( "Escolha seu time"), // O TITLE É UM PARAMETRO NOMEADO QUE RECEBE UM WIDGET
+          title: const Text(
+              "Escolha seu time"), // O TITLE É UM PARAMETRO NOMEADO QUE RECEBE UM WIDGET
         ),
         body: temPerguntaSelecionada
-            ? Column(
-                children: <Widget>[
-                  Questao(_perguntas[_PerguntaSelecionada]["texto"].toString()),
-                  ...respostas.map((t) => Resposta(t, _responder)).toList(),
-                ],
+            ? Questionario(
+                perguntas: _perguntas,
+                perguntaSelecionada: _perguntaSelecionada,
+                quantoResponder: _responder,
               )
-            : const Center(
-                child: Text(
-                  "Obrigador por responder!",
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
+            : Resultado(_pontuacaoTotal, _reiniciarApp),
       ),
     );
   }
