@@ -37,7 +37,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
         "respostas": ["Aflitos", "Arruda", "Ilha do Retiro", "Arena Pernambuco"]
       }
   ]; 
+  List<Widget> resposta = [];
 
+  for(var textoResp in perguntas[_PerguntaSelecionada].cast()["respostas"]){
+     resposta.add(Resposta(textoResp, _responder));
+  }
     return  MaterialApp(
       home:  Scaffold (
         appBar: AppBar(
@@ -46,10 +50,8 @@ class _PerguntaAppState extends State<PerguntaApp> {
          body:  Column(
            children:  <Widget>  [
              Questao(perguntas[_PerguntaSelecionada]["texto"].toString()),
-             Resposta("Resposta 1", _responder),  //  A FUNCAO _RESPONDER FOI PASSADA COMO PARAMENTRO PARA RESPOSTA
-             Resposta("Resposta 2", _responder),
-             Resposta("Resposta 3", _responder) ,
-             
+            ...resposta,
+            
                
            ],
          ),
@@ -64,10 +66,4 @@ class PerguntaApp extends StatefulWidget{
   _PerguntaAppState createState() {
      return _PerguntaAppState();
   }
-  
-  
- 
-
-    
- 
 }
